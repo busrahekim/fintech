@@ -9,16 +9,33 @@ import {
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import { Link, useRouter } from "expo-router";
+import { useSignUp } from "@clerk/clerk-expo";
 
 const Page = () => {
   const [countryCode, setCountryCode] = useState("+90");
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
 
-  // const {signUp} = useSignUp()
+  const { signUp } = useSignUp();
 
   const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0;
-  const onSignUp = async () => {};
+  const onSignUp = async () => {
+    const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+    try {
+      await signUp!.create({
+        phoneNumber: fullPhoneNumber,
+      });
+      signUp!.preparePhoneNumberVerification();
+
+      router.push({
+        pathname: "/verify/[phone]",
+        params: { phone: fullPhoneNumber },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       className="flex-1"

@@ -6,11 +6,13 @@ import {
   Platform,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 
 enum SignInType {
   Phone,
@@ -20,14 +22,50 @@ enum SignInType {
 }
 
 const Page = () => {
+  const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0;
+
   const [countryCode, setCountryCode] = useState("+90");
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
 
-  // const {signUp} = useSignIn()
+  const { signIn } = useSignIn();
 
-  const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0;
-  const onSignIn = async (type: SignInType) => {};
+  const onSignIn = async (type: SignInType) => {
+    if (type === SignInType.Phone) {
+      try {
+        const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+        const { supportedFirstFactors } = await signIn!.create({
+          identifier: fullPhoneNumber,
+        });
+
+        const firstPhoneFactor: any = supportedFirstFactors.find(
+          (factor: any) => {
+            return factor.strategy === "phone_code";
+          }
+        );
+        const { phoneNumberId } = firstPhoneFactor;
+
+        signIn!.prepareFirstFactor({
+          strategy: "phone_code",
+          phoneNumberId,
+        });
+        router.push({
+          pathname: "/verify/[phone]",
+          params: { phone: fullPhoneNumber, signin: "true" },
+        });
+
+        router.push({ pathname: "/help", params: { phone: fullPhoneNumber } });
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+      if (isClerkAPIResponseError(error)) {
+        if (error.errors[0].code === "form_identifier_not_found") {
+          Alert.alert(error.errors[0].message);
+        }
+      }
+      }
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       className="flex-1"
