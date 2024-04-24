@@ -43,6 +43,8 @@ const Page = () => {
 
   const verifyCode = async () => {
     try {
+      console.log(code);
+
       await signUp!.attemptPhoneNumberVerification({ code });
       await setActive!({ session: signUp!.createdSessionId });
     } catch (err) {

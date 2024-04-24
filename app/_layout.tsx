@@ -59,12 +59,13 @@ const RootLayout = () => {
   useEffect(() => {
     if (!loaded) return;
 
-    // const inAuthGroup = segments[0] === "(authenticated)"
-    // if (isSignedIn && !inAuthGroup) {
-    //   router.replace('/(authenticated)/(tabs)/home');
-    // } else if (!isSignedIn) {
-    //   router.replace('/');
-    // }
+    const inAuthGroup = segments[0] === "(authenticated)";
+    if (isSignedIn && !inAuthGroup) {
+      router.replace("/(authenticated)/(tabs)/home");
+    } else if (!isSignedIn) {
+      router.replace("/");
+      console.log(isSignedIn);
+    }
   }, [isSignedIn]);
 
   if (!loaded || !isLoaded) {
@@ -135,6 +136,11 @@ const RootLayout = () => {
             </TouchableOpacity>
           ),
         }}
+      />
+
+      <Stack.Screen
+        name="(authenticated)/(tabs)"
+        options={{ headerShown: false }}
       />
     </Stack>
   );

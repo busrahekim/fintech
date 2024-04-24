@@ -24,7 +24,7 @@ enum SignInType {
 const Page = () => {
   const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0;
 
-  const [countryCode, setCountryCode] = useState("+90");
+  const [countryCode, setCountryCode] = useState("+49");
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
 
@@ -49,19 +49,22 @@ const Page = () => {
           strategy: "phone_code",
           phoneNumberId,
         });
+        // router.push({
+        //   pathname: "/verify/[phone]",
+        //   params: { phone: fullPhoneNumber, signin: "true" },
+        // });
+
         router.push({
-          pathname: "/verify/[phone]",
+          pathname: "/(authenticated)/(tabs)/home",
           params: { phone: fullPhoneNumber, signin: "true" },
         });
-
-        router.push({ pathname: "/help", params: { phone: fullPhoneNumber } });
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
-      if (isClerkAPIResponseError(error)) {
-        if (error.errors[0].code === "form_identifier_not_found") {
-          Alert.alert(error.errors[0].message);
+        if (isClerkAPIResponseError(error)) {
+          if (error.errors[0].code === "form_identifier_not_found") {
+            Alert.alert(error.errors[0].message);
+          }
         }
-      }
       }
     }
   };

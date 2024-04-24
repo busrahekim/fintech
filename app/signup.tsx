@@ -12,7 +12,7 @@ import { Link, useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
 
 const Page = () => {
-  const [countryCode, setCountryCode] = useState("+90");
+  const [countryCode, setCountryCode] = useState("+49");
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
 
