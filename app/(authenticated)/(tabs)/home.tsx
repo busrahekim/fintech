@@ -5,6 +5,7 @@ import RoundBtn from "@/components/RoundBtn";
 import Dropdown from "@/components/Dropdown";
 import { useBalanceStore } from "@/store/balanceStore";
 import { Ionicons } from "@expo/vector-icons";
+import WidgetList from "@/components/SortableList/WidgetList";
 
 const Page = () => {
   const { balance, clearTransactions, runTransaction, transactions } =
@@ -67,6 +68,8 @@ const Page = () => {
           </View>
         ))}
       </View>
+      <Text className="font-bold text-lg m-5 mb-2">Widgets</Text>
+      <WidgetList />
     </ScrollView>
   );
 };
