@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Button } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 import RoundBtn from "@/components/RoundBtn";
@@ -6,11 +6,14 @@ import Dropdown from "@/components/Dropdown";
 import { useBalanceStore } from "@/store/balanceStore";
 import { Ionicons } from "@expo/vector-icons";
 import WidgetList from "@/components/SortableList/WidgetList";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const Page = () => {
   const { balance, clearTransactions, runTransaction, transactions } =
     useBalanceStore();
-  // const headerHeight = useHeaderHeight();
+  const headerHeight = useHeaderHeight();
+ 
+  
   const onAddMoney = () => {
     runTransaction({
       transactionId: Math.random().toString(),
@@ -22,9 +25,9 @@ const Page = () => {
   return (
     <ScrollView
       style={{ backgroundColor: Colors.background }}
-      // contentContainerStyle={{
-      //   paddingTop: headerHeight,
-      // }}
+      contentContainerStyle={{
+        paddingTop: headerHeight,
+      }}
     >
       <View className="m-20">
         <View className="flex flex-row gap-2 justify-center items-end">
@@ -48,7 +51,7 @@ const Page = () => {
         )}
         {transactions.map((transaction) => (
           <View
-            className="items-center flex flex-row gap-4"
+            className="items-center flex flex-row gap-4 mb-2"
             key={transaction.transactionId}
           >
             <View className="rounded-full w-8 h-8 bg-[#D8DCE2] justify-center items-center">
