@@ -8,6 +8,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import * as SecureStore from "expo-secure-store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 const clerk = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 const tokenCache = {
@@ -148,7 +150,9 @@ const RootLayout = () => {
 const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={clerk!} tokenCache={tokenCache}>
-      <RootLayout />
+      <QueryClientProvider client={queryClient}>
+        <RootLayout />
+      </QueryClientProvider>
     </ClerkProvider>
   );
 };
