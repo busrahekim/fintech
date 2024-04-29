@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UserInactivityProvider } from "@/context/UserInactivity";
 const queryClient = new QueryClient();
 
 const clerk = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
@@ -145,10 +146,10 @@ const RootLayout = () => {
         options={{ headerShown: false }}
       />
 
-     <Stack.Screen
+      <Stack.Screen
         name="(authenticated)/crypto/[id]"
         options={{
-          title: '',
+          title: "",
           headerLeft: () => (
             <TouchableOpacity onPress={router.back}>
               <Ionicons name="arrow-back" size={34} color={Colors.dark} />
@@ -157,14 +158,37 @@ const RootLayout = () => {
           headerLargeTitle: true,
           headerTransparent: true,
           headerRight: () => (
-            <View style={{ flexDirection: 'row', gap: 10 }}>
+            <View style={{ flexDirection: "row", gap: 10 }}>
               <TouchableOpacity>
-                <Ionicons name="notifications-outline" color={Colors.dark} size={30} />
+                <Ionicons
+                  name="notifications-outline"
+                  color={Colors.dark}
+                  size={30}
+                />
               </TouchableOpacity>
               <TouchableOpacity>
                 <Ionicons name="star-outline" color={Colors.dark} size={30} />
               </TouchableOpacity>
             </View>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="(authenticated)/(modals)/lock"
+        options={{ headerShown: false, animation: "none" }}
+      />
+      <Stack.Screen
+        name="(authenticated)/(modals)/account"
+        options={{
+          presentation: "transparentModal",
+          animation: "fade",
+          title: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={router.back}>
+              <Ionicons name="close-outline" size={34} color={"#fff"} />
+            </TouchableOpacity>
           ),
         }}
       />
@@ -175,7 +199,9 @@ const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={clerk!} tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
-        <RootLayout />
+        <UserInactivityProvider>
+          <RootLayout />
+        </UserInactivityProvider>
       </QueryClientProvider>
     </ClerkProvider>
   );
