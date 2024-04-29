@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 import React from "react";
 import { BlurView } from "expo-blur";
 import { Link } from "expo-router";
@@ -17,17 +23,17 @@ const CustomHeader = () => {
           </TouchableOpacity>
         </Link>
 
-        <View className="flex-1 flex-row bg-[#D8DCE2] rounded-lg items-center gap-x-2 gap-y-1 justify-center">
+        <View style={styles.searchSection}>
           <Ionicons
-            name={"search"}
+            style={styles.searchIcon}
+            name="search"
             size={20}
             color={Colors.dark}
-            style={{ padding: 10 }}
           />
           <TextInput
+            style={styles.input}
             placeholder="Search"
             placeholderTextColor={Colors.dark}
-            className="flex-1 p-1 pl-0 bg-[#D8DCE2] text-[#141518]"
           />
         </View>
         <View className="rounded-full bg-[#D8DCE2] w-10 h-10 justify-center items-center">
@@ -40,5 +46,27 @@ const CustomHeader = () => {
     </BlurView>
   );
 };
-
+const styles = StyleSheet.create({
+  searchSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.lightGray,
+    borderRadius: 30,
+  },
+  searchIcon: {
+    padding: 10,
+  },
+  input: {
+    flex: 1,
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingLeft: 0,
+    backgroundColor: Colors.lightGray,
+    color: Colors.dark,
+    borderRadius: 30,
+  },
+});
 export default CustomHeader;

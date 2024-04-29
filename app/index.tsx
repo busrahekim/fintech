@@ -26,7 +26,7 @@ const Page = () => {
       </View>
       <View className="flex flex-row justify-center gap-5 mb-14 px-5">
         <Link
-          href={"/login"}
+          href={"/(authenticated)/(tabs)/home"}
           className="p-2 h-14 rounded-full justify-center items-center flex-1"
           style={{ backgroundColor: Colors.dark }}
           asChild

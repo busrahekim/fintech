@@ -49,13 +49,8 @@ const Page = () => {
           strategy: "phone_code",
           phoneNumberId,
         });
-        // router.push({
-        //   pathname: "/verify/[phone]",
-        //   params: { phone: fullPhoneNumber, signin: "true" },
-        // });
-
         router.push({
-          pathname: "/(authenticated)/(tabs)/home",
+          pathname: "/verify/[phone]",
           params: { phone: fullPhoneNumber, signin: "true" },
         });
       } catch (error) {
