@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
@@ -14,7 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   GestureHandlerRootView,
   ScrollView,
-  TouchableOpacity,
 } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import {
