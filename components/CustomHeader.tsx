@@ -17,7 +17,7 @@ const CustomHeader = () => {
   return (
     <BlurView intensity={80} tint={"extraLight"} style={{ paddingTop: top }}>
       <View className="flex flex-row items-center justify-around h-14 gap-2 px-5 bg-transparent">
-        <Link href={"/"} asChild>
+        <Link href={"/(authenticated)/(modals)/accoubt"} asChild>
           <TouchableOpacity className="rounded-full bg-[#626D77] w-10 h-10 justify-center items-center">
             <Text className="text-white font-medium text-lg">BH</Text>
           </TouchableOpacity>
